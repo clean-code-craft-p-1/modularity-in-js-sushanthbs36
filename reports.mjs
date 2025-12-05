@@ -1,4 +1,4 @@
-import { writeToFile } from './fileHandling.mjs'
+import { writeToFile, generateSummaryFilename } from './fileUtils.mjs'
 
 //Generating and Saving the Report
 function formatSummary(results) {
@@ -30,8 +30,9 @@ export function generateAndSaveReport(filename, results) {
     console.log(formatSummary(results));
 
     // Save to file
-    const outName = filename.replace('.csv','_csv') + '_summary.txt';
+    const outName = generateSummaryFilename(filename);
     const fileReportContent = formatSummary(results, true);
     writeToFile(outName, fileReportContent);
     console.log(`Report saved to ${outName}`);
 }
+

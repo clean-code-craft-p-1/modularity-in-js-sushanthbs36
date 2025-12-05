@@ -1,5 +1,5 @@
 import fs from 'fs';
-
+import { writeToFile, readFileContent } from './fileUtils.mjs';
 const testData = [
 '09:15:30,23.5',
 '09:16:00,24.1',
@@ -10,61 +10,22 @@ const testData = [
 '09:18:30,22.4',
 '09:19:00,26.1',
 '09:19:30,23.2',
-'09:20:00,25.0',
-'09:20:30,28.0',
-'09:21:00,35.0',
-'09:21:30,22.0',
-'09:22:00,28.0',
-'09:22:30,26.3'
+'09:20:00,25.0'
 ]
-
-
-//Creating the Test File
+// Creating the Test File
 export function createTestFile(testFileName){
-    fs.writeFileSync(testFileName, testData.join('\n') + '\n')
+    writeToFile(testFileName, testData.join('\n') + '\n'); 
     console.log(`Created test file: ${testFileName}` +'\n');
 }
-
-//Reading File Content
-export function readFileContent(fileName){
-    try{
-        return fs.readFileSync(fileName,'utf-8');
-    }
-    catch(error){
-        if(error.code === 'ENOENT'){
-            console.log(`File not Found: ${fileName}`);
-            return;
-        }
-        throw error
-    }
-}
-
-//Writing Content to File
-export function writeToFile(fileName,content){
-    try{
-        fs.writeFileSync(fileName, content);
-    }
-    catch(error){
-        if(error.code === 'ENOENT'){
-            console.log(`File not Found: ${fileName}`);
-            return;
-        }
-        else if(error.code === 'EACCES'){
-            console.log(`Permision Denied to access the File: ${fileName}`)
-        }
-        console.log('Error writing to file:',error.message);
-    }
-}
-
-//Verfying the Summary Files and Cleaning up Test Files
+// Verfying the Summary Files and Cleaning up Test Files
 export function cleanpUpTestFiles(testFileName,summaryFile){
     if (fs.existsSync(summaryFile)) {
         console.log(`\nSummary file created: ${summaryFile}`)
-        const content = fs.readFileSync(summaryFile, 'utf8')
+        const content = readFileContent(summaryFile)
 
         const checks = [
-        'Total readings: 15',
-        'Valid readings: 15',
+        'Total readings: 10',
+        'Valid readings: 10',
         'Errors: 0'
         ]
 

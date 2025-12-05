@@ -1,4 +1,4 @@
-import { readFileContent } from './fileHandling.mjs';
+import { readFileContent } from './fileUtils.mjs';
 import { parseTemperatureData } from './dataParsing.mjs';
 
 //Performing Computation on the Data
